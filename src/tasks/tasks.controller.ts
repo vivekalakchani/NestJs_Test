@@ -23,7 +23,9 @@ export class TasksController {
   constructor(private tasksService: TasksService) {}
 
   @Get()
-  getTask(@Query(ValidationPipe) filterDto: getTasksFilterDto) {
+  getTask(
+    @Query(ValidationPipe) filterDto: getTasksFilterDto,
+  ): Promise<Task[]> {
     return this.tasksService.getTask(filterDto);
   }
   @Get('/:id')
@@ -31,7 +33,7 @@ export class TasksController {
     return this.tasksService.getTaskById(id);
   }
 
-  @Post('/create')
+  @Post()
   @UsePipes(ValidationPipe)
   createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksService.createTask(createTaskDto);
